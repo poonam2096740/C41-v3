@@ -123,14 +123,14 @@ class Game {
   play() {
     this.handleElements();
     this.handleResetButton();
-    this.showLife();
-    this.showFuelBar();
+    
 
     Player.getPlayersInfo();
     player.getCarsAtEnd();
     if (allPlayers !== undefined) {
       image(track, 0, -height * 5, width, height * 6);
-
+      this.showLife();
+      this.showFuelBar();
       this.showLeaderboard();
 
       //index of the array
@@ -158,7 +158,16 @@ class Game {
           camera.position.y = cars[index - 1].position.y;
         }
 
-        const finishLine=height*6-100;
+        
+      }
+      if(this.playerMoving) {
+        player.positionY += 5;
+        player.update();
+      }
+      // handling keyboard events
+      this.handlePlayerControls();
+
+      const finishLine=height*6-100;
 
         if(player.positionY > finishLine) {
           console.log(player)
@@ -168,13 +177,6 @@ class Game {
           player.update();
           this.showRank();
         }
-      }
-      if(this.playerMoving) {
-        player.positionY += 5;
-        player.update();
-      }
-      // handling keyboard events
-      this.handlePlayerControls();
 
       drawSprites();
     }
@@ -324,3 +326,4 @@ class Game {
     });
   }
 }
+
